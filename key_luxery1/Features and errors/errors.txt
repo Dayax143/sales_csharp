@@ -1,14 +1,20 @@
-invalid column name 'invoice_id',
-invalid column name 'reference_no',
+refresh the home dashboard
 
-converting the varchar value 'no' to data type int
-converting the varchar value 'no' to data type int
-converting the varchar value 'no' to data type int
+reports calculation (decorate reports)
 
-when creating product
+search by id the product
 
+=========================
+- return payment, sale and invoice if mis created
 
+- save tax to expenses for every invoice
 
-converting the varchar value 'no' to data type int
-converting the varchar value 'no' to data type int
-converting the varchar value 'no' to data type int
+- filter sales 
+
+- edit expenses
+
+enter to login
+
+decorate dashboard with expenses
+
+customer history in reports and in sales window

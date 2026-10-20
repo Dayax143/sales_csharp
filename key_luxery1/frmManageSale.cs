@@ -536,15 +536,17 @@ namespace key_luxery1
 				db.ExecuteQueries(updateInvoice);
 
 				// 6. Insert Payment Record
-				string insertPayment = $"INSERT INTO tblPayment (invoice_id, amount_paid, payment_date, payment_method) " +
-									 $"VALUES ({currentInvoiceId}, {grandTotal}, '{saleDate}', '{paymentMethod}')";
+				string insertPayment = $"INSERT INTO tblPayment (invoice_id, amount_paid, payment_date, payment_method, deleted) " +
+									 $"VALUES ({currentInvoiceId}, {grandTotal}, '{saleDate}', '{paymentMethod}',0)";
 				db.ExecuteQueries(insertPayment);
+
+				string insertExpense = $"INSERT INTO tblExpenses (Category, Amount, ExpenseDate, Description, CreatedAt, Status, Deleted) " +
+					   $"VALUES ('Taxes & Insurance', {taxAmount}, GETDATE(), 'GST Tax payment', GETDATE(), 'Active', 0)";
+				db.ExecuteQueries(insertExpense);
 
 				isSaleCompleted = true;
 				MessageBox.Show("Sale completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
-
-
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error completing sale: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -565,6 +567,11 @@ namespace key_luxery1
 		private void txtSearchCustomerPhone_TextChanged(object sender, EventArgs e)
 		{
 			//LoadCustomers();
+		}
+
+		private void txtTax_TextChanged(object sender, EventArgs e)
+		{
+			CalculateGrandTotal();
 		}
 	}
 }

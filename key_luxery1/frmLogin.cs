@@ -13,8 +13,9 @@ namespace key_luxery1
 			InitializeComponent();
 		}
 
-		private void btnLogin_Click(object sender, EventArgs e)
+		public void loginFunction()
 		{
+
 			string username = TxtUser.Text.Trim();
 			string password = TxtPassword.Text.Trim();
 
@@ -55,12 +56,12 @@ namespace key_luxery1
 					// Verify password
 					if (dbPassword == password)
 					{
-						if(role=="Admin")
+						if (role == "Admin")
 						{
 							dashboard.PnlSidebar.Visible = true;
 							dashboard.BtnSidebar.Visible = true;
 						}
-						else if(role!="Admin")
+						else if (role != "Admin")
 						{
 							//dash.btnReport.Visible = false;
 							//dash.pnlReport.Visible = false;
@@ -73,7 +74,7 @@ namespace key_luxery1
 						{
 							MessageBox.Show("Your role is not recognized. Please contact the administrator.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 							return;
-						}	
+						}
 						MessageBox.Show($"Welcome back, {username}!\nRole: {role}", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 						dashboard.lblUsername.Text = username;
@@ -98,6 +99,11 @@ namespace key_luxery1
 				MessageBox.Show("Database login error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
+
+		private void btnLogin_Click(object sender, EventArgs e)
+		{
+			loginFunction();
+		}
 		private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
 		{
 			// If the checkbox is checked, reveal the password text; otherwise, mask it.
@@ -120,6 +126,18 @@ namespace key_luxery1
 			Application.Exit();
 		}
 
+		private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+		{
+			// Check if the Enter key was pressed
+			if (e.KeyCode == Keys.Enter)
+			{
+				// Suppress the annoying "ding" sound
+				e.SuppressKeyPress = true;
+
+				// Trigger the login button's click event
+				btnLogin_Click(sender, e);
+			}
+		}
 		private void btnConfig_Click(object sender, EventArgs e)
 		{
 

@@ -152,6 +152,7 @@
 			this.btnLogin.Text = "Login";
 			this.btnLogin.UseVisualStyleBackColor = false;
 			this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+			this.btnLogin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
 			// 
 			// btnExit
 			// 

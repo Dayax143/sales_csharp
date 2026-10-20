@@ -253,15 +253,33 @@ namespace key_luxery1
 				{
 					try
 					{
-						string deleteQuery = $"UPDATE tblInvoice SET deleted = 1 WHERE invoice_id = {invoiceId}";
-						db.ExecuteQueries(deleteQuery);
+						// 1. Restore stock quantities for all items linked to this invoice
+						string restoreStock = @"UPDATE p 
+                            SET p.quantity = p.quantity + s.quantity 
+                            FROM tblProduct p 
+                            INNER JOIN tblSale s ON p.product_id = s.product_id 
+                            WHERE s.invoice_id = " + invoiceId;
+						db.ExecuteQueries(restoreStock);
 
-						MessageBox.Show("Invoice deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-						LoadInvoices();
+						// 2. Mark payment records as deleted (deleted = 1) instead of removing them
+						string softDeletePayment = $"UPDATE tblPayment SET deleted = 1 WHERE invoice_id = {invoiceId}";
+						db.ExecuteQueries(softDeletePayment);
+
+						// 3. Mark sale items as deleted (deleted = 1) instead of removing them
+						string softDeleteSales = $"UPDATE tblSale SET deleted = 1 WHERE invoice_id = {invoiceId}";
+						db.ExecuteQueries(softDeleteSales);
+
+						// 4. Reset/Clear the Invoice record back to unpaid/default state and mark it cancelled/deleted if applicable
+						string resetInvoice = $"UPDATE tblInvoice SET " +
+											  $"deleted = 1 " +
+											  $"WHERE invoice_id = {invoiceId}";
+						db.ExecuteQueries(resetInvoice);
+
+						MessageBox.Show("Transaction successfully undone and marked as deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show("Error deleting invoice: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						MessageBox.Show("Error undoing transaction: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 				}
 			}

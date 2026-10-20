@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Data;
 using System.Windows.Forms;
 
@@ -44,7 +45,7 @@ namespace key_luxery1
 
 		private void LoadExpenses()
 		{
-			string query = "SELECT Id, Category, Amount, ExpenseDate AS Date, Description FROM tblExpenses ORDER BY ExpenseDate DESC";
+			string query = "SELECT Id, Category, Amount, ExpenseDate AS Date, Description FROM tblExpenses where deleted=0 ORDER BY ExpenseDate DESC ";
 
 			// Using your sharedClass GetData method to fetch data into a DataTable (needed for search filtering)
 			expenseTable = sharedClass.GetData(query);
@@ -130,7 +131,7 @@ namespace key_luxery1
 				if (confirmResult == DialogResult.Yes)
 				{
 					int id = Convert.ToInt32(dgvExpenses.SelectedRows[0].Cells["Id"].Value);
-					string query = "DELETE FROM tblExpenses WHERE Id = " + id;
+					string query = "Update tblExpenses set deleted=1 WHERE Id = " + id;
 
 					try
 					{
@@ -165,6 +166,69 @@ namespace key_luxery1
 			{
 				expenseTable.DefaultView.RowFilter = string.Empty;
 			}
+		}
+		private void dgvExpenses_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			try
+			{
+				// Ensure a valid row is clicked (excluding headers)
+				if (e.RowIndex >= 0)
+				{
+					DataGridViewRow row = dgvExpenses.Rows[e.RowIndex];
+
+					// Load DataGridView values into your controls
+					// (Make sure the column names inside row.Cells match your database column names)
+
+					txtId.Text = row.Cells["Id"].Value?.ToString(); // Assuming you have a hidden txtId for the primary key
+					cmbCategory.Text = row.Cells["category"].Value?.ToString();
+
+					txtAmount.Text = row.Cells["amount"].Value?.ToString();
+
+					//if (row.Cells["expense_date"].Value != DBNull.Value && row.Cells["expense_date"].Value != null)
+					//{
+					//	dtpExpenseDate.Value = Convert.ToDateTime(row.Cells["expense_date"].Value);
+					//}
+
+					txtNotes.Text = row.Cells["description"].Value?.ToString();
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void btnUpdate_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Assuming you have a variable or textbox storing the selected row's ID
+				int expenseId = Convert.ToInt32(txtId.Text);
+
+				string category = cmbCategory.Text;
+				decimal amount = Convert.ToDecimal(txtAmount.Text);
+				//string date = dtpExpenseDate.Value.ToString("yyyy-MM-dd");
+				string description = string.IsNullOrWhiteSpace(txtNotes.Text) ? "" : txtNotes.Text.Trim().Replace("'", "''");
+
+				// Fixed: Indices are now sequential ({0}, {1}, {2}, {3}) and match your parameters
+				string query = string.Format(
+					"UPDATE tblExpenses SET Category = '{0}', Amount = {1}, Description = '{3}' WHERE Id = {4}",
+					category, amount, description, expenseId
+				);
+
+				db.ExecuteQueries(query);
+				MessageBox.Show("Record updated successfully!");
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Source);
+			}
+		}
+
+		private void frmExpense_Load(object sender, EventArgs e)
+		{
+			LoadExpenses();
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace key_luxery1
 			InitializeComponent();
 		}
 
-		private void uHome_Load(object sender, EventArgs e)
+		public void loadHome()
 		{
 			LoadDashboardMetrics();
 			LoadTopSellingProducts();
@@ -23,6 +23,11 @@ namespace key_luxery1
 			LoadFinancialBreakdown();
 			LoadRecentSalesFeed();
 			LoadLowStockAlerts();
+		}
+
+		private void uHome_Load(object sender, EventArgs e)
+		{
+			loadHome();
 		}
 
 		/// <summary>
@@ -215,6 +220,11 @@ namespace key_luxery1
 			{
 				System.Diagnostics.Debug.WriteLine("Low Stock Alerts Error: " + ex.Message);
 			}
+		}
+
+		private void btnRefresh_Click(object sender, EventArgs e)
+		{
+			loadHome();
 		}
 	}
 }

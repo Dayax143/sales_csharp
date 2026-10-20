@@ -61,7 +61,7 @@ namespace key_luxery1
 				if (!string.IsNullOrEmpty(searchKeyword))
 				{
 					string safeKeyword = searchKeyword.Replace("'", "''");
-					countQuery += $" AND (item_name LIKE '%{safeKeyword}%' OR sale_id LIKE '%{safeKeyword}%' OR barcode LIKE '%{safeKeyword}%')";
+					countQuery += $" AND (product_name LIKE '%{safeKeyword}%' OR sale_id LIKE '%{safeKeyword}%')";
 				}
 
 				//if (!string.IsNullOrEmpty(category) && category != "All Categories")
@@ -91,7 +91,7 @@ namespace key_luxery1
 				if (!string.IsNullOrEmpty(searchKeyword))
 				{
 					string safeKeyword = searchKeyword.Replace("'", "''");
-					query += $" AND (item_name LIKE '%{safeKeyword}%' OR sale_id LIKE '%{safeKeyword}%' OR barcode LIKE '%{safeKeyword}%')";
+					query += $" AND (product_name LIKE '%{safeKeyword}%' OR sale_id LIKE '%{safeKeyword}%')";
 				}
 
 				//if (!string.IsNullOrEmpty(category) && category != "All Categories")

@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManageSale));
 			this.lblTitle = new System.Windows.Forms.Label();
 			this.grpCustomerInfo = new System.Windows.Forms.GroupBox();
@@ -143,7 +143,7 @@
 			this.btnFindCustomer.Name = "btnFindCustomer";
 			this.btnFindCustomer.Size = new System.Drawing.Size(99, 29);
 			this.btnFindCustomer.TabIndex = 1;
-			this.btnFindCustomer.Text = "Find Cust";
+			this.btnFindCustomer.Text = "Create cust";
 			this.btnFindCustomer.UseVisualStyleBackColor = false;
 			this.btnFindCustomer.Click += new System.EventHandler(this.btnFindCustomer_Click);
 			// 
@@ -314,14 +314,14 @@
 			this.dgvCart.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.dgvCart.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvCart.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvCart.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+			dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+			dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvCart.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
 			this.dgvCart.ColumnHeadersHeight = 35;
 			this.dgvCart.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colProductID,
@@ -329,14 +329,14 @@
             this.colPrice,
             this.colQuantity,
             this.colSubtotal});
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dgvCart.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+			dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+			dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvCart.DefaultCellStyle = dataGridViewCellStyle10;
 			this.dgvCart.EnableHeadersVisualStyles = false;
 			this.dgvCart.Location = new System.Drawing.Point(475, 65);
 			this.dgvCart.Name = "dgvCart";
@@ -345,7 +345,7 @@
 			this.dgvCart.RowHeadersWidth = 51;
 			this.dgvCart.RowTemplate.Height = 30;
 			this.dgvCart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvCart.Size = new System.Drawing.Size(585, 510);
+			this.dgvCart.Size = new System.Drawing.Size(619, 510);
 			this.dgvCart.TabIndex = 3;
 			// 
 			// colProductID
@@ -417,9 +417,11 @@
 			this.txtTax.Font = new System.Drawing.Font("Segoe UI", 9.5F);
 			this.txtTax.Location = new System.Drawing.Point(151, 29);
 			this.txtTax.Name = "txtTax";
+			this.txtTax.ReadOnly = true;
 			this.txtTax.Size = new System.Drawing.Size(249, 29);
 			this.txtTax.TabIndex = 0;
 			this.txtTax.Text = "0";
+			this.txtTax.TextChanged += new System.EventHandler(this.txtTax_TextChanged);
 			// 
 			// lblDiscount
 			// 
@@ -457,9 +459,10 @@
 			this.cmbPaymentMethod.FormattingEnabled = true;
 			this.cmbPaymentMethod.Items.AddRange(new object[] {
             "Cash",
-            "Credit Card",
-            "Bank Transfer",
-            "Store Credit"});
+            "Zaad",
+            "Edahab",
+            "Premiere Bank",
+            "Other"});
 			this.cmbPaymentMethod.Location = new System.Drawing.Point(151, 105);
 			this.cmbPaymentMethod.Name = "cmbPaymentMethod";
 			this.cmbPaymentMethod.Size = new System.Drawing.Size(249, 29);
@@ -497,7 +500,7 @@
 			this.btnClearCart.ForeColor = System.Drawing.Color.White;
 			this.btnClearCart.Location = new System.Drawing.Point(475, 585);
 			this.btnClearCart.Name = "btnClearCart";
-			this.btnClearCart.Size = new System.Drawing.Size(110, 42);
+			this.btnClearCart.Size = new System.Drawing.Size(114, 42);
 			this.btnClearCart.TabIndex = 7;
 			this.btnClearCart.Text = "Clear Cart";
 			this.btnClearCart.UseVisualStyleBackColor = false;
@@ -527,7 +530,7 @@
 			this.btnSaveOnly.ForeColor = System.Drawing.Color.White;
 			this.btnSaveOnly.Location = new System.Drawing.Point(726, 585);
 			this.btnSaveOnly.Name = "btnSaveOnly";
-			this.btnSaveOnly.Size = new System.Drawing.Size(118, 42);
+			this.btnSaveOnly.Size = new System.Drawing.Size(143, 42);
 			this.btnSaveOnly.TabIndex = 5;
 			this.btnSaveOnly.Text = "Save && Close";
 			this.btnSaveOnly.UseVisualStyleBackColor = false;
@@ -540,7 +543,7 @@
 			this.btnSaveAndPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnSaveAndPrint.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
 			this.btnSaveAndPrint.ForeColor = System.Drawing.Color.White;
-			this.btnSaveAndPrint.Location = new System.Drawing.Point(850, 585);
+			this.btnSaveAndPrint.Location = new System.Drawing.Point(875, 586);
 			this.btnSaveAndPrint.Name = "btnSaveAndPrint";
 			this.btnSaveAndPrint.Size = new System.Drawing.Size(125, 42);
 			this.btnSaveAndPrint.TabIndex = 6;
@@ -555,7 +558,7 @@
 			this.btnCloseForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnCloseForm.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
 			this.btnCloseForm.ForeColor = System.Drawing.Color.White;
-			this.btnCloseForm.Location = new System.Drawing.Point(985, 585);
+			this.btnCloseForm.Location = new System.Drawing.Point(1010, 586);
 			this.btnCloseForm.Name = "btnCloseForm";
 			this.btnCloseForm.Size = new System.Drawing.Size(80, 42);
 			this.btnCloseForm.TabIndex = 7;
@@ -602,7 +605,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-			this.ClientSize = new System.Drawing.Size(1085, 650);
+			this.ClientSize = new System.Drawing.Size(1106, 650);
 			this.Controls.Add(this.btnClearCart);
 			this.Controls.Add(this.btnRemoveItem);
 			this.Controls.Add(this.btnCloseForm);
