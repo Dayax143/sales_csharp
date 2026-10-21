@@ -13,8 +13,9 @@ search by id the product
 
 - edit expenses
 
+- decorate dashboard with expenses
+
 enter to login
 
-decorate dashboard with expenses
-
 customer history in reports and in sales window
+

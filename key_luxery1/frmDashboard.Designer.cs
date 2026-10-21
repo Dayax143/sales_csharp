@@ -79,7 +79,7 @@
 			this.BtnSetting.Font = new System.Drawing.Font("Segoe UI", 11F);
 			this.BtnSetting.ForeColor = System.Drawing.Color.White;
 			this.BtnSetting.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnSetting.Location = new System.Drawing.Point(22, 204);
+			this.BtnSetting.Location = new System.Drawing.Point(19, 108);
 			this.BtnSetting.Margin = new System.Windows.Forms.Padding(4);
 			this.BtnSetting.Name = "BtnSetting";
 			this.BtnSetting.Size = new System.Drawing.Size(181, 41);
@@ -93,7 +93,7 @@
 			// 
 			this.PnlSetting.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.PnlSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-			this.PnlSetting.Location = new System.Drawing.Point(6, 204);
+			this.PnlSetting.Location = new System.Drawing.Point(3, 108);
 			this.PnlSetting.Margin = new System.Windows.Forms.Padding(4);
 			this.PnlSetting.Name = "PnlSetting";
 			this.PnlSetting.Size = new System.Drawing.Size(10, 41);
@@ -107,7 +107,7 @@
 			this.BtnAbout.Font = new System.Drawing.Font("Segoe UI", 11F);
 			this.BtnAbout.ForeColor = System.Drawing.Color.White;
 			this.BtnAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnAbout.Location = new System.Drawing.Point(21, 107);
+			this.BtnAbout.Location = new System.Drawing.Point(18, 246);
 			this.BtnAbout.Margin = new System.Windows.Forms.Padding(4);
 			this.BtnAbout.Name = "BtnAbout";
 			this.BtnAbout.Size = new System.Drawing.Size(181, 41);
@@ -121,7 +121,7 @@
 			// 
 			this.PnlAbout.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.PnlAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-			this.PnlAbout.Location = new System.Drawing.Point(5, 107);
+			this.PnlAbout.Location = new System.Drawing.Point(2, 246);
 			this.PnlAbout.Margin = new System.Windows.Forms.Padding(4);
 			this.PnlAbout.Name = "PnlAbout";
 			this.PnlAbout.Size = new System.Drawing.Size(10, 41);
@@ -135,7 +135,7 @@
 			this.BtnUsers.Font = new System.Drawing.Font("Segoe UI", 11F);
 			this.BtnUsers.ForeColor = System.Drawing.Color.White;
 			this.BtnUsers.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnUsers.Location = new System.Drawing.Point(20, 156);
+			this.BtnUsers.Location = new System.Drawing.Point(17, 197);
 			this.BtnUsers.Margin = new System.Windows.Forms.Padding(4);
 			this.BtnUsers.Name = "BtnUsers";
 			this.BtnUsers.Size = new System.Drawing.Size(181, 41);
@@ -149,7 +149,7 @@
 			// 
 			this.PnlUsers.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.PnlUsers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-			this.PnlUsers.Location = new System.Drawing.Point(6, 156);
+			this.PnlUsers.Location = new System.Drawing.Point(3, 197);
 			this.PnlUsers.Margin = new System.Windows.Forms.Padding(4);
 			this.PnlUsers.Name = "PnlUsers";
 			this.PnlUsers.Size = new System.Drawing.Size(10, 41);
@@ -213,12 +213,12 @@
 			this.btnExpense.Font = new System.Drawing.Font("Segoe UI", 11F);
 			this.btnExpense.ForeColor = System.Drawing.Color.White;
 			this.btnExpense.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnExpense.Location = new System.Drawing.Point(20, 253);
+			this.btnExpense.Location = new System.Drawing.Point(19, 59);
 			this.btnExpense.Margin = new System.Windows.Forms.Padding(4);
 			this.btnExpense.Name = "btnExpense";
 			this.btnExpense.Size = new System.Drawing.Size(181, 41);
 			this.btnExpense.TabIndex = 0;
-			this.btnExpense.Text = "- Expense";
+			this.btnExpense.Text = "  💳  Expenses";
 			this.btnExpense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.btnExpense.UseVisualStyleBackColor = true;
 			this.btnExpense.Click += new System.EventHandler(this.btnExpense_Click);
@@ -227,7 +227,7 @@
 			// 
 			this.pnlExpense.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.pnlExpense.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-			this.pnlExpense.Location = new System.Drawing.Point(4, 253);
+			this.pnlExpense.Location = new System.Drawing.Point(3, 59);
 			this.pnlExpense.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlExpense.Name = "pnlExpense";
 			this.pnlExpense.Size = new System.Drawing.Size(10, 41);
@@ -241,7 +241,7 @@
 			this.btnReport.Font = new System.Drawing.Font("Segoe UI", 11F);
 			this.btnReport.ForeColor = System.Drawing.Color.White;
 			this.btnReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.btnReport.Location = new System.Drawing.Point(21, 58);
+			this.btnReport.Location = new System.Drawing.Point(19, 152);
 			this.btnReport.Margin = new System.Windows.Forms.Padding(4);
 			this.btnReport.Name = "btnReport";
 			this.btnReport.Size = new System.Drawing.Size(181, 41);
@@ -255,7 +255,7 @@
 			// 
 			this.pnlReport.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.pnlReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-			this.pnlReport.Location = new System.Drawing.Point(5, 58);
+			this.pnlReport.Location = new System.Drawing.Point(3, 152);
 			this.pnlReport.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlReport.Name = "pnlReport";
 			this.pnlReport.Size = new System.Drawing.Size(10, 41);
@@ -641,7 +641,6 @@
 		public System.Windows.Forms.Panel pnlReport;
 		private uProducts uProducts1;
 		private uSales uSales1;
-		private uHome uHome1;
 		private uManageUsers uManageUsers1;
 		private uAbout uAbout1;
 		private uSettings uSettings1;
@@ -654,5 +653,6 @@
 		private System.Windows.Forms.Button btnCustomer;
 		public System.Windows.Forms.Button btnExpense;
 		public System.Windows.Forms.Panel pnlExpense;
+		public uHome uHome1;
 	}
 }

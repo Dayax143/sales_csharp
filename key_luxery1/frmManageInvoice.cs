@@ -275,6 +275,12 @@ namespace key_luxery1
 											  $"WHERE invoice_id = {invoiceId}";
 						db.ExecuteQueries(resetInvoice);
 
+						// 4. Reset/Clear the Invoice record back to unpaid/default state and mark it cancelled/deleted if applicable
+						string resetGSTExpense = $"UPDATE tblExpenses SET " +
+											  $"deleted = 1 " +
+											  $"WHERE invoice_id = {invoiceId}";
+						db.ExecuteQueries(resetGSTExpense);
+
 						MessageBox.Show("Transaction successfully undone and marked as deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					}
 					catch (Exception ex)

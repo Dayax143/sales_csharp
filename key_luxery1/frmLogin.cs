@@ -69,6 +69,7 @@ namespace key_luxery1
 							//dash.PnlUsers.Visible = false;
 							dashboard.PnlSidebar.Visible = false;
 							dashboard.BtnSidebar.Visible = false;
+							dashboard.uHome1.Visible = false;
 						}
 						else
 						{

@@ -17,10 +17,10 @@ namespace key_luxery1
 			LoadExpenses();
 
 			// Wire up event handlers
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-			this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+			//this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			//this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+			//this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+			//this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
 		}
 
 		private void LoadCategories()
@@ -87,7 +87,7 @@ namespace key_luxery1
 
 			// Build query for your ExecuteQueries method
 			string query = string.Format(
-				"INSERT INTO tblExpenses (Category, Amount, ExpenseDate, Description) VALUES ('{0}', {1}, '{2}', '{3}')",
+				"INSERT INTO tblExpenses (Category, Amount, ExpenseDate, Description,deleted) VALUES ('{0}', {1}, '{2}', '{3}',0)",
 				category, amount, date, description
 			);
 
@@ -197,32 +197,41 @@ namespace key_luxery1
 				MessageBox.Show(ex.Message);
 			}
 		}
-
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				// Assuming you have a variable or textbox storing the selected row's ID
-				int expenseId = Convert.ToInt32(txtId.Text);
-
-				string category = cmbCategory.Text;
-				decimal amount = Convert.ToDecimal(txtAmount.Text);
-				//string date = dtpExpenseDate.Value.ToString("yyyy-MM-dd");
-				string description = string.IsNullOrWhiteSpace(txtNotes.Text) ? "" : txtNotes.Text.Trim().Replace("'", "''");
-
-				// Fixed: Indices are now sequential ({0}, {1}, {2}, {3}) and match your parameters
-				string query = string.Format(
-					"UPDATE tblExpenses SET Category = '{0}', Amount = {1}, Description = '{3}' WHERE Id = {4}",
-					category, amount, description, expenseId
+				// Ask for confirmation before updating
+				DialogResult confirmResult = MessageBox.Show(
+					"Are you sure you want to update this record?",
+					"Confirm Update",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Question
 				);
 
-				db.ExecuteQueries(query);
-				MessageBox.Show("Record updated successfully!");
+				// Proceed only if the user clicks 'Yes'
+				if (confirmResult == DialogResult.Yes)
+				{
+					int expenseId = Convert.ToInt32(txtId.Text);
+
+					string category = cmbCategory.Text.Trim().Replace("'", "''");
+					decimal amount = Convert.ToDecimal(txtAmount.Text);
+					// string expenseDate = dtpExpenseDate.Value.ToString("yyyy-MM-dd"); // Date commented out
+					string description = string.IsNullOrWhiteSpace(txtNotes.Text) ? "" : txtNotes.Text.Trim().Replace("'", "''");
+
+					string query = string.Format(
+						"UPDATE tblExpenses SET Category = '{0}', Amount = {1}, Description = '{2}' WHERE Id = {3}",
+						category, amount, description, expenseId
+					);
+
+					db.ExecuteQueries(query);
+					LoadExpenses();
+					MessageBox.Show("Record updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
-				MessageBox.Show(ex.Source);
+				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 

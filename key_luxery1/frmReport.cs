@@ -63,7 +63,7 @@ namespace key_luxery1
 					query = string.Format(
 						"SELECT Id, Category, Amount, ExpenseDate AS Date, Description " +
 						"FROM tblExpenses " +
-						"WHERE ExpenseDate BETWEEN '{0}' AND '{1}' " +
+						"WHERE ExpenseDate BETWEEN '{0}' AND '{1}' and deleted=0" +
 						"ORDER BY ExpenseDate DESC",
 						startDate, endDate);
 					break;
@@ -74,7 +74,7 @@ namespace key_luxery1
 						"FROM tblSale WHERE ISNULL(deleted, 0) = 0 AND ISNULL(returned, 0) = 0 AND date BETWEEN '{0}' AND '{1}' " +
 						"UNION ALL " +
 						"SELECT 'Operating Expenses' AS Type, ISNULL(SUM(Amount), 0) AS Amount " +
-						"FROM tblExpenses WHERE ExpenseDate BETWEEN '{0}' AND '{1}'",
+						"FROM tblExpenses WHERE ISNULL(deleted, 0) = 0 AND ExpenseDate BETWEEN '{0}' AND '{1}'",
 						startDate, endDate);
 					break;
 
@@ -87,7 +87,7 @@ namespace key_luxery1
 						"FROM tblSale s " +
 						"FULL OUTER JOIN tblExpenses e ON CAST(s.date AS DATE) = CAST(e.ExpenseDate AS DATE) " +
 						"WHERE (ISNULL(s.deleted, 0) = 0) " +
-						"AND ((s.date BETWEEN '{0}' AND '{1}') OR (e.ExpenseDate BETWEEN '{0}' AND '{1}')) " +
+						"AND ((s.date BETWEEN '{0}' AND '{1}' and e.deleted=0) OR (e.ExpenseDate BETWEEN '{0}' AND '{1}')) " +
 						"GROUP BY ISNULL(CAST(s.date AS DATE), CAST(e.ExpenseDate AS DATE)) " +
 						"ORDER BY Date DESC",
 						startDate, endDate);
@@ -125,7 +125,7 @@ namespace key_luxery1
 				decimal totalSales = (salesObj != DBNull.Value && salesObj != null) ? Convert.ToDecimal(salesObj) : 0m;
 
 				string expenseQuery = string.Format(
-					"SELECT SUM(Amount) FROM tblExpenses WHERE ExpenseDate BETWEEN '{0}' AND '{1}'",
+					"SELECT SUM(Amount) FROM tblExpenses WHERE ExpenseDate BETWEEN '{0}' AND '{1}' and deleted=0",
 					startDate, endDate);
 				object expObj = db.ExecuteScalarQuery(expenseQuery);
 				decimal totalExpenses = (expObj != DBNull.Value && expObj != null) ? Convert.ToDecimal(expObj) : 0m;

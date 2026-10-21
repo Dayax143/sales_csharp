@@ -68,60 +68,6 @@ namespace key_luxery1
 			}
 		}
 
-		private void LoadCustomers()
-		{
-			try
-			{
-				string phone = txtSearchCustomerPhone.Text.Trim();
-				if (string.IsNullOrEmpty(phone))
-				{
-					MessageBox.Show("Please enter a customer phone number.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					txtSearchCustomerPhone.Focus();
-					return;
-				}
-
-				// Properly assign the returned DataTable from sharedClass.GetData
-				// Added single quotes around phone value and sanitized input against quotes
-				string query = $"SELECT customer_id, customer_name, customer_phone,status FROM tblCustomer WHERE deleted = 0 AND customer_phone = '{phone.Replace("'", "''")}'";
-				DataTable dt = sharedClass.GetData(query);
-
-				// Check if any records were actually returned
-				if (dt != null && dt.Rows.Count > 0)
-				{
-					// Use Rows[0] for the first matching record (0-based index)
-					txtcustomer_id.Text = dt.Rows[0]["customer_id"].ToString();
-					txtCustomer_name.Text = dt.Rows[0]["customer_name"].ToString();
-					string customer_status = dt.Rows[0]["status"].ToString();
-				}
-				else
-				{
-					DialogResult dialog = MessageBox.Show("No active customer found with that phone number, register now !", "Not Found", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-					if (dialog == DialogResult.Yes)
-					{
-						if (txtCustomer_name.Text == "")
-						{
-							MessageBox.Show("Please enter the customer name to register now");
-						}
-						else
-						{
-							query = $"Insert into tblCustomer (customer_phone,customer_name,deleted,status,date) values({txtSearchCustomerPhone.Text},'{txtCustomer_name.Text}',0,'start',GetDate())";
-							db.ExecuteQueries(query);
-							MessageBox.Show("Successfully registered");
-						}
-					}
-					else if (dialog == DialogResult.No)
-					{
-						txtcustomer_id.Clear();
-						txtCustomer_name.Clear();
-						txtSearchCustomerPhone.Clear();
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error loading customers: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
 
 		// Search customer automatically by typing phone number
 		// Declare a variable at the form level to hold the ID
@@ -442,10 +388,6 @@ namespace key_luxery1
 			}
 		}
 
-		private void btnFindCustomer_Click(object sender, EventArgs e)
-		{
-			LoadCustomers();
-		}
 
 		public void completeSale()
 		{
@@ -540,8 +482,8 @@ namespace key_luxery1
 									 $"VALUES ({currentInvoiceId}, {grandTotal}, '{saleDate}', '{paymentMethod}',0)";
 				db.ExecuteQueries(insertPayment);
 
-				string insertExpense = $"INSERT INTO tblExpenses (Category, Amount, ExpenseDate, Description, CreatedAt, Status, Deleted) " +
-					   $"VALUES ('Taxes & Insurance', {taxAmount}, GETDATE(), 'GST Tax payment', GETDATE(), 'Active', 0)";
+				string insertExpense = $"INSERT INTO tblExpenses (Category, Amount, ExpenseDate, Description, CreatedAt, Status, Deleted, invoice_id) " +
+					   $"VALUES ('Taxes & Insurance', {taxAmount}, GETDATE(), 'GST Tax payment', GETDATE(), 'Active', 0, {currentInvoiceId})";
 				db.ExecuteQueries(insertExpense);
 
 				isSaleCompleted = true;
@@ -562,6 +504,67 @@ namespace key_luxery1
 		private void printPreviewDialog1_Load(object sender, EventArgs e)
 		{
 
+		}
+
+
+		private void LoadCustomers()
+		{
+			try
+			{
+				string phone = txtSearchCustomerPhone.Text.Trim();
+				if (string.IsNullOrEmpty(phone))
+				{
+					MessageBox.Show("Please enter a customer phone number.", "Validation Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					txtSearchCustomerPhone.Focus();
+					return;
+				}
+
+				// Properly assign the returned DataTable from sharedClass.GetData
+				// Added single quotes around phone value and sanitized input against quotes
+				string query = $"SELECT customer_id, customer_name, customer_phone,status FROM tblCustomer WHERE deleted = 0 AND customer_phone = '{phone.Replace("'", "''")}'";
+				DataTable dt = sharedClass.GetData(query);
+
+				// Check if any records were actually returned
+				if (dt != null && dt.Rows.Count > 0)
+				{
+					// Use Rows[0] for the first matching record (0-based index)
+					txtcustomer_id.Text = dt.Rows[0]["customer_id"].ToString();
+					txtCustomer_name.Text = dt.Rows[0]["customer_name"].ToString();
+					string customer_status = dt.Rows[0]["status"].ToString();
+				}
+				else
+				{
+					DialogResult dialog = MessageBox.Show("No active customer found with that phone number, register now !", "Not Found", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+					if (dialog == DialogResult.Yes)
+					{
+						if (txtCustomer_name.Text == "")
+						{
+							MessageBox.Show("Please enter the customer name to register now");
+						}
+						else
+						{
+							query = $"Insert into tblCustomer (customer_phone,customer_name,deleted,status,date) values({txtSearchCustomerPhone.Text},'{txtCustomer_name.Text}',0,'start',GetDate())";
+							db.ExecuteQueries(query);
+							MessageBox.Show("Successfully registered");
+						}
+					}
+					else if (dialog == DialogResult.No)
+					{
+						txtcustomer_id.Clear();
+						txtCustomer_name.Clear();
+						txtSearchCustomerPhone.Clear();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Error loading customers: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
+		private void btnFindCustomer_Click(object sender, EventArgs e)
+		{
+			LoadCustomers();
 		}
 
 		private void txtSearchCustomerPhone_TextChanged(object sender, EventArgs e)

@@ -33,40 +33,112 @@ namespace key_luxery1
 		/// <summary>
 		/// Loads summary metrics for top KPI cards
 		/// </summary>
+		/// 
+
 		public void LoadDashboardMetrics()
 		{
 			try
 			{
-				// 1. Total Revenue
-				object revObj = db.ExecuteScalar("SELECT SUM(grand_total) FROM tblInvoice WHERE deleted = 0 AND status = 'Paid'");
-				decimal totalRevenue = (revObj != null && revObj != DBNull.Value) ? Convert.ToDecimal(revObj) : 0;
-				lblCard1Value.Text = totalRevenue.ToString("C2");
+				// 1. Card 1: Total Revenue (from tblInvoice.grand_total)
+				string qryTotalRevenue = "SELECT ISNULL(SUM(grand_total), 0) FROM tblInvoice WHERE (deleted = 0 OR deleted IS NULL)";
+				object res1 = db.ExecuteScalarQuery(qryTotalRevenue);
+				lblCard1Value.Text = Convert.ToDecimal(res1 ?? 0).ToString("C2");
 
-				// 2. Total Sales Count
-				object salesObj = db.ExecuteScalar("SELECT COUNT(invoice_id) FROM tblInvoice WHERE deleted = 0 AND status = 'Paid'");
-				int totalSales = (salesObj != null && salesObj != DBNull.Value) ? Convert.ToInt32(salesObj) : 0;
-				lblCard2Value.Text = totalSales.ToString("N0");
+				// 2. Card 2: Total Sales Count (from tblSale)
+				string qryTotalSalesCount = "SELECT COUNT(*) FROM tblSale WHERE (deleted = 0 OR deleted IS NULL)";
+				object res2 = db.ExecuteScalarQuery(qryTotalSalesCount);
+				lblCard2Value.Text = (res2 ?? 0).ToString();
 
-				// 3. Active Products Count
-				object prodObj = db.ExecuteScalar("SELECT COUNT(product_id) FROM tblProduct WHERE deleted = 0");
-				int activeProducts = (prodObj != null && prodObj != DBNull.Value) ? Convert.ToInt32(prodObj) : 0;
-				lblCard3Value.Text = activeProducts.ToString("N0");
+				// 3. Card 3: Active Products Count (from tblproduct)
+				string qryActiveProducts = "SELECT COUNT(*) FROM tblproduct WHERE status = 'Active' AND (deleted = 0 OR deleted IS NULL)";
+				object res3 = db.ExecuteScalarQuery(qryActiveProducts);
+				lblCard3Value.Text = (res3 ?? 0).ToString();
 
-				// 4. Total Customers Count
-				object custObj = db.ExecuteScalar("SELECT COUNT(customer_id) FROM tblCustomer WHERE deleted = 0");
-				int totalCustomers = (custObj != null && custObj != DBNull.Value) ? Convert.ToInt32(custObj) : 0;
-				lblCard4Value.Text = totalCustomers.ToString("N0");
+				// 4. Card 4: Last Month Revenue (from tblInvoice using invoice_date)
+				string qryLastMonthRev = @"SELECT ISNULL(SUM(grand_total), 0) FROM tblInvoice 
+                                           WHERE invoice_date >= DATEADD(month, DATEDIFF(month, 0, GETDATE()) - 1, 0)
+                                           AND invoice_date < DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0)
+                                           AND (deleted = 0 OR deleted IS NULL)";
+				object res4 = db.ExecuteScalarQuery(qryLastMonthRev);
+				lblCard4Value.Text = Convert.ToDecimal(res4 ?? 0).ToString("C2");
 
-				// 5. Low Stock Items Count
-				object lowStockObj = db.ExecuteScalar($"SELECT COUNT(product_id) FROM tblProduct WHERE deleted = 0 AND quantity <= {LOW_STOCK_THRESHOLD}");
-				int lowStockCount = (lowStockObj != null && lowStockObj != DBNull.Value) ? Convert.ToInt32(lowStockObj) : 0;
-				lblCard5Value.Text = lowStockCount.ToString("N0");
+				// 5. Card 5: Total Expenses (Kept from tblExpenses table)
+				string qryTotalExpenses = "SELECT ISNULL(SUM(Amount), 0) from tblExpenses where deleted=0";
+				object res5 = db.ExecuteScalarQuery(qryTotalExpenses);
+				lblCard5Value.Text = Convert.ToDecimal(res5 ?? 0).ToString("C2");
+
+				// 6. Card 6: Last Month Expenses (Kept from tblExpenses table)
+				string qryLastMonthExp = @"SELECT ISNULL(SUM(Amount), 0) from tblExpenses 
+                                           WHERE ExpenseDate >= DATEADD(month, DATEDIFF(month, 0, GETDATE()) - 1, 0)
+                                           AND ExpenseDate < DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0)";
+				object res6 = db.ExecuteScalarQuery(qryLastMonthExp);
+				lblCard6Value.Text = Convert.ToDecimal(res6 ?? 0).ToString("C2");
+
+				// --- Payment Methods Breakdown (from tblPayment.amount_paid & payment_method) ---
+				// Zaad Total
+				string qryZaad = "SELECT ISNULL(SUM(amount_paid), 0) FROM tblPayment WHERE payment_method = 'Zaad' AND (deleted = 0 OR deleted IS NULL)";
+				object resZaad = db.ExecuteScalarQuery(qryZaad);
+				lblZaadVal.Text = Convert.ToDecimal(resZaad ?? 0).ToString("C2");
+
+				// eDahab Total
+				string qryEdahab = "SELECT ISNULL(SUM(amount_paid), 0) FROM tblPayment WHERE payment_method = 'eDahab' AND (deleted = 0 OR deleted IS NULL)";
+				object resEdahab = db.ExecuteScalarQuery(qryEdahab);
+				lblEdahabVal.Text = Convert.ToDecimal(resEdahab ?? 0).ToString("C2");
+
+				// Cash Total
+				string qryCash = "SELECT ISNULL(SUM(amount_paid), 0) FROM tblPayment WHERE payment_method = 'Cash' AND (deleted = 0 OR deleted IS NULL)";
+				object resCash = db.ExecuteScalarQuery(qryCash);
+				lblCashVal.Text = Convert.ToDecimal(resCash ?? 0).ToString("C2");
+
+				// Premiere Bank Total
+				string qryBank = "SELECT ISNULL(SUM(amount_paid), 0) FROM tblPayment WHERE payment_method = 'Premiere Bank' AND (deleted = 0 OR deleted IS NULL)";
+				object resBank = db.ExecuteScalarQuery(qryBank);
+				lblBankVal.Text = Convert.ToDecimal(resBank ?? 0).ToString("C2");
+
+				// Other Payment Methods Total
+				string qryOther = "SELECT ISNULL(SUM(amount_paid), 0) FROM tblPayment WHERE payment_method NOT IN ('Zaad', 'eDahab', 'Premiere Bank') AND (deleted = 0 OR deleted IS NULL)";
+				object resOther = db.ExecuteScalarQuery(qryOther);
+				lblOtherVal.Text = Convert.ToDecimal(resOther ?? 0).ToString("C2");
 			}
 			catch (Exception ex)
 			{
-				System.Diagnostics.Debug.WriteLine("Error loading metrics: " + ex.Message);
+				MessageBox.Show("Error loading dashboard metrics: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
+		//public void LoadDashboardMetrics()
+		//{
+		//	try
+		//	{
+		//		// 1. Total Revenue
+		//		object revObj = db.ExecuteScalar("SELECT SUM(grand_total) FROM tblInvoice WHERE deleted = 0 AND status = 'Paid'");
+		//		decimal totalRevenue = (revObj != null && revObj != DBNull.Value) ? Convert.ToDecimal(revObj) : 0;
+		//		lblCard1Value.Text = totalRevenue.ToString("C2");
+
+		//		// 2. Total Sales Count
+		//		object salesObj = db.ExecuteScalar("SELECT COUNT(invoice_id) FROM tblInvoice WHERE deleted = 0 AND status = 'Paid'");
+		//		int totalSales = (salesObj != null && salesObj != DBNull.Value) ? Convert.ToInt32(salesObj) : 0;
+		//		lblCard2Value.Text = totalSales.ToString("N0");
+
+		//		// 3. Active Products Count
+		//		object prodObj = db.ExecuteScalar("SELECT COUNT(product_id) FROM tblProduct WHERE deleted = 0");
+		//		int activeProducts = (prodObj != null && prodObj != DBNull.Value) ? Convert.ToInt32(prodObj) : 0;
+		//		lblCard3Value.Text = activeProducts.ToString("N0");
+
+		//		// 4. Total Customers Count
+		//		object custObj = db.ExecuteScalar("SELECT COUNT(customer_id) FROM tblCustomer WHERE deleted = 0");
+		//		int totalCustomers = (custObj != null && custObj != DBNull.Value) ? Convert.ToInt32(custObj) : 0;
+		//		lblCard4Value.Text = totalCustomers.ToString("N0");
+
+		//		// 5. Low Stock Items Count
+		//		object lowStockObj = db.ExecuteScalar($"SELECT COUNT(product_id) FROM tblProduct WHERE deleted = 0 AND quantity <= {LOW_STOCK_THRESHOLD}");
+		//		int lowStockCount = (lowStockObj != null && lowStockObj != DBNull.Value) ? Convert.ToInt32(lowStockObj) : 0;
+		//		lblCard5Value.Text = lowStockCount.ToString("N0");
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		System.Diagnostics.Debug.WriteLine("Error loading metrics: " + ex.Message);
+		//	}
+		//}
 
 		/// <summary>
 		/// Loads Top 10 Best Selling Products
@@ -226,5 +298,6 @@ namespace key_luxery1
 		{
 			loadHome();
 		}
+
 	}
 }

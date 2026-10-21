@@ -122,20 +122,35 @@ namespace key_luxery1
 			ShowControl(uCustomer1);
 			pnlCustomer.Visible = true;
 		}
-
 		private void BtnSidebar_Click(object sender, EventArgs e)
 		{
-			// Expand/Collapse Sidebar Toggle functionality
+			// Toggle between expanded (203px) and icon-only collapsed (60px) view
 			if (PnlSidebar.Width > 60)
 			{
-				PnlSidebar.Width = 0;
+				PnlSidebar.Width = 00;
+
+				// Hide text, keep only icons/symbols
+				BtnDashboard.Text = "  🏠";
+				btnReport.Text = "  📊";
+				BtnAbout.Text = "  ℹ";
+				BtnUsers.Text = "  👥";
+				BtnSetting.Text = "  ⚙";
+				btnExpense.Text = "  💳";
 			}
 			else
 			{
 				PnlSidebar.Width = 203;
+
+				// Restore full text with icons
+				BtnDashboard.Text = "  🏠  Dashboard";
+				btnReport.Text = "  📊  Reports";
+				BtnAbout.Text = "  ℹ  About";
+				BtnUsers.Text = "  👥  Users";
+				BtnSetting.Text = "  ⚙  Settings";
+				btnExpense.Text = "  💳  Expenses";
 			}
 		}
-		
+
 		private void btnLogout_Click(object sender, EventArgs e)
 		{
 			var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
