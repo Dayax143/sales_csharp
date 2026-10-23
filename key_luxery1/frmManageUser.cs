@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using System.Runtime.Remoting.Lifetime;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace key_luxery1
@@ -33,6 +36,72 @@ namespace key_luxery1
 			}
 		}
 
+		private static readonly string SecretKey = "0123456789abcdef0123456789abcdef"; // Must be exactly 32 characters
+
+		public string Encrypt(string plainText)
+		{
+			if (string.IsNullOrEmpty(plainText)) return plainText;
+
+			byte[] iv = new byte[16];
+			byte[] array;
+
+			using (Aes aes = Aes.Create())
+			{
+				aes.Key = Encoding.UTF8.GetBytes(SecretKey);
+				aes.IV = iv;
+
+				ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+				using (MemoryStream memoryStream = new MemoryStream())
+				{
+					using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+					{
+						using (StreamWriter streamWriter = new StreamWriter(cryptoStream))
+						{
+							streamWriter.Write(plainText);
+						}
+						array = memoryStream.ToArray();
+					}
+				}
+			}
+
+			return Convert.ToBase64String(array);
+		}
+
+		public string Decrypt(string cipherText)
+		{
+			if (string.IsNullOrEmpty(cipherText)) return cipherText;
+
+			try
+			{
+				byte[] iv = new byte[16];
+				byte[] buffer = Convert.FromBase64String(cipherText);
+
+				using (Aes aes = Aes.Create())
+				{
+					aes.Key = Encoding.UTF8.GetBytes(SecretKey);
+					aes.IV = iv;
+					ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+					using (MemoryStream memoryStream = new MemoryStream(buffer))
+					{
+						using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+						{
+							using (StreamReader streamReader = new StreamReader(cryptoStream))
+							{
+								return streamReader.ReadToEnd();
+							}
+						}
+					}
+				}
+			}
+			catch
+			{
+				// Fallback for any old plain-text passwords
+				return cipherText;
+			}
+		}
+
 		private void btnSave_Click(object sender, EventArgs e)
 		{
 			// Validate required fields
@@ -48,38 +117,43 @@ namespace key_luxery1
 				Func<string, string> SqlLiteralOrNull = s =>
 					string.IsNullOrWhiteSpace(s) ? "NULL" : $"'{s.Trim().Replace("'", "''")}'";
 
-										// Prepare sanitized values
-										string userNameVal = txtUserName.Text.Trim().Replace("'", "''");
-										string passwordVal = SqlLiteralOrNull(txtPassword.Text);
-										string roleVal = SqlLiteralOrNull(cmbRole.Text);
-										string questionVal = SqlLiteralOrNull(cmbRecoveryQuestion.Text);
-										string answerVal = SqlLiteralOrNull(txtRecoveryAnswer.Text);
-										// Default status to 'Active' when not provided
-										string statusVal = string.IsNullOrWhiteSpace(cmbStatus.Text) ? "'Active'" : SqlLiteralOrNull(cmbStatus.Text);
-										string dateVal = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+				// Prepare sanitized values
+				string userNameVal = txtUserName.Text.Trim().Replace("'", "''");
 
-										// Build the INSERT statement carefully (all string pieces concatenated to avoid interpolation pitfalls)
-										string query = "INSERT INTO tblUser (userName, passWord, role, recoveryQuestion, recoveryAnswer, user_Status, date) VALUES ("
-														+ $"'{userNameVal}', "
-														+ $"{passwordVal}, "
-														+ $"{roleVal}, "
-														+ $"{questionVal}, "
-														+ $"{answerVal}, "
-														+ $"{statusVal}, "
-														+ $"'{dateVal}')";
-										
-										// Execute and refresh
-										db.ExecuteQueries(query);
-										MessageBox.Show("User saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				// Encrypt the password before formatting it into a SQL literal
+				string rawPassword = txtPassword.Text;
+				string encryptedPassword = string.IsNullOrWhiteSpace(rawPassword) ? "" : Encrypt(rawPassword);
+				string passwordVal = SqlLiteralOrNull(encryptedPassword);
 
-										LoadUserData();
-										ClearFields();
-									}
-									catch (Exception ex)
-									{
-										MessageBox.Show("Error saving user: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-									}
+				string roleVal = SqlLiteralOrNull(cmbRole.Text);
+				string questionVal = SqlLiteralOrNull(cmbRecoveryQuestion.Text);
+				string answerVal = SqlLiteralOrNull(txtRecoveryAnswer.Text);
 
+				// Default status to 'Active' when not provided
+				string statusVal = string.IsNullOrWhiteSpace(cmbStatus.Text) ? "'Active'" : SqlLiteralOrNull(cmbStatus.Text);
+				string dateVal = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+				// Build the INSERT statement carefully
+				string query = "INSERT INTO tblUser (userName, passWord, role, recoveryQuestion, recoveryAnswer, user_Status, date) VALUES ("
+								+ $"'{userNameVal}', "
+								+ $"{passwordVal}, "
+								+ $"{roleVal}, "
+								+ $"{questionVal}, "
+								+ $"{answerVal}, "
+								+ $"{statusVal}, "
+								+ $"'{dateVal}')";
+
+				// Execute and refresh
+				db.ExecuteQueries(query);
+				MessageBox.Show("User saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+				LoadUserData();
+				ClearFields();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Error saving user: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		private void btnUpdate_Click(object sender, EventArgs e)
@@ -89,9 +163,23 @@ namespace key_luxery1
 				MessageBox.Show("Please select a user from the grid to update.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
+
 			try
 			{
-				string query = $"UPDATE tblUser SET userName = '{txtUserName.Text.Trim().Replace("'", "''")}', passWord = '{txtPassword.Text.Trim().Replace("'", "''")}', role = '{cmbRole.Text.Trim().Replace("'", "''")}', recoveryQuestion = '{cmbRecoveryQuestion.Text.Trim().Replace("'", "''")}', recoveryAnswer = '{txtRecoveryAnswer.Text.Trim().Replace("'", "''")}', user_Status = '{cmbStatus.Text.Trim().Replace("'", "''")}' WHERE user_id = {txtUserId.Text.Trim()}";
+				// Encrypt the password before updating (handles empty fields safely)
+				string rawPassword = txtPassword.Text.Trim();
+				string encryptedPassword = string.IsNullOrEmpty(rawPassword) ? "" : Encrypt(rawPassword);
+				string passwordVal = encryptedPassword.Replace("'", "''");
+
+				string query = $"UPDATE tblUser SET " +
+							   $"userName = '{txtUserName.Text.Trim().Replace("'", "''")}', " +
+							   $"passWord = '{passwordVal}', " +
+							   $"role = '{cmbRole.Text.Trim().Replace("'", "''")}', " +
+							   $"recoveryQuestion = '{cmbRecoveryQuestion.Text.Trim().Replace("'", "''")}', " +
+							   $"recoveryAnswer = '{txtRecoveryAnswer.Text.Trim().Replace("'", "''")}', " +
+							   $"user_Status = '{cmbStatus.Text.Trim().Replace("'", "''")}' " +
+							   $"WHERE user_id = {txtUserId.Text.Trim()}";
+
 				db.ExecuteQueries(query);
 				MessageBox.Show("User updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				LoadUserData();

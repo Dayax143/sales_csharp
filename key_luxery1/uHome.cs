@@ -194,6 +194,8 @@ namespace key_luxery1
 			}
 		}
 
+
+
 		/// <summary>
 		/// Loads Gross Sales, Tax, Discount, and Net Profit Summaries
 		/// </summary>

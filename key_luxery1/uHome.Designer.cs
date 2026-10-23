@@ -65,10 +65,13 @@
 			this.lblDiscountTitle = new System.Windows.Forms.Label();
 			this.lblTaxVal = new System.Windows.Forms.Label();
 			this.lblTaxTitle = new System.Windows.Forms.Label();
+			this.lblCashVal = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.lblGrossSalesVal = new System.Windows.Forms.Label();
 			this.lblGrossSalesTitle = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.lblCashVal = new System.Windows.Forms.Label();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.label2 = new System.Windows.Forms.Label();
+			this.lbl = new System.Windows.Forms.Label();
 			this.pnlTop.SuspendLayout();
 			this.pnlCard6.SuspendLayout();
 			this.pnlCard5.SuspendLayout();
@@ -89,11 +92,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.dgvCategorySales)).BeginInit();
 			this.tabFinancial.SuspendLayout();
 			this.pnlFinancialContainer.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pnlTop
 			// 
 			this.pnlTop.Controls.Add(this.btnRefresh);
+			this.pnlTop.Controls.Add(this.panel1);
 			this.pnlTop.Controls.Add(this.pnlCard6);
 			this.pnlTop.Controls.Add(this.pnlCard5);
 			this.pnlTop.Controls.Add(this.pnlCard4);
@@ -104,7 +109,7 @@
 			this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.pnlTop.Location = new System.Drawing.Point(0, 0);
 			this.pnlTop.Name = "pnlTop";
-			this.pnlTop.Size = new System.Drawing.Size(1134, 163);
+			this.pnlTop.Size = new System.Drawing.Size(1266, 163);
 			this.pnlTop.TabIndex = 8;
 			// 
 			// btnRefresh
@@ -114,7 +119,7 @@
 			this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
 			this.btnRefresh.ForeColor = System.Drawing.Color.White;
-			this.btnRefresh.Location = new System.Drawing.Point(1005, 59);
+			this.btnRefresh.Location = new System.Drawing.Point(1159, 59);
 			this.btnRefresh.Name = "btnRefresh";
 			this.btnRefresh.Size = new System.Drawing.Size(104, 90);
 			this.btnRefresh.TabIndex = 12;
@@ -127,7 +132,7 @@
 			this.pnlCard6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
 			this.pnlCard6.Controls.Add(this.lblCard6Title);
 			this.pnlCard6.Controls.Add(this.lblCard6Value);
-			this.pnlCard6.Location = new System.Drawing.Point(837, 59);
+			this.pnlCard6.Location = new System.Drawing.Point(506, 59);
 			this.pnlCard6.Name = "pnlCard6";
 			this.pnlCard6.Size = new System.Drawing.Size(158, 90);
 			this.pnlCard6.TabIndex = 12;
@@ -159,7 +164,7 @@
 			this.pnlCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
 			this.pnlCard5.Controls.Add(this.lblCard5Title);
 			this.pnlCard5.Controls.Add(this.lblCard5Value);
-			this.pnlCard5.Location = new System.Drawing.Point(672, 59);
+			this.pnlCard5.Location = new System.Drawing.Point(341, 59);
 			this.pnlCard5.Name = "pnlCard5";
 			this.pnlCard5.Size = new System.Drawing.Size(158, 90);
 			this.pnlCard5.TabIndex = 11;
@@ -191,7 +196,7 @@
 			this.pnlCard4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(34)))));
 			this.pnlCard4.Controls.Add(this.lblCard4Title);
 			this.pnlCard4.Controls.Add(this.lblCard4Value);
-			this.pnlCard4.Location = new System.Drawing.Point(507, 59);
+			this.pnlCard4.Location = new System.Drawing.Point(176, 59);
 			this.pnlCard4.Name = "pnlCard4";
 			this.pnlCard4.Size = new System.Drawing.Size(158, 90);
 			this.pnlCard4.TabIndex = 10;
@@ -223,7 +228,7 @@
 			this.pnlCard3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
 			this.pnlCard3.Controls.Add(this.lblCard3Title);
 			this.pnlCard3.Controls.Add(this.lblCard3Value);
-			this.pnlCard3.Location = new System.Drawing.Point(342, 59);
+			this.pnlCard3.Location = new System.Drawing.Point(835, 59);
 			this.pnlCard3.Name = "pnlCard3";
 			this.pnlCard3.Size = new System.Drawing.Size(158, 90);
 			this.pnlCard3.TabIndex = 9;
@@ -255,7 +260,7 @@
 			this.pnlCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
 			this.pnlCard2.Controls.Add(this.lblCard2Title);
 			this.pnlCard2.Controls.Add(this.lblCard2Value);
-			this.pnlCard2.Location = new System.Drawing.Point(177, 59);
+			this.pnlCard2.Location = new System.Drawing.Point(670, 59);
 			this.pnlCard2.Name = "pnlCard2";
 			this.pnlCard2.Size = new System.Drawing.Size(158, 90);
 			this.pnlCard2.TabIndex = 8;
@@ -332,7 +337,7 @@
 			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnlMain.Location = new System.Drawing.Point(0, 163);
 			this.pnlMain.Name = "pnlMain";
-			this.pnlMain.Size = new System.Drawing.Size(1134, 608);
+			this.pnlMain.Size = new System.Drawing.Size(1266, 672);
 			this.pnlMain.TabIndex = 9;
 			// 
 			// tabRightFeed
@@ -665,6 +670,28 @@
 			this.lblTaxTitle.TabIndex = 2;
 			this.lblTaxTitle.Text = "Total GST Tax Collected:";
 			// 
+			// lblCashVal
+			// 
+			this.lblCashVal.AutoSize = true;
+			this.lblCashVal.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+			this.lblCashVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+			this.lblCashVal.Location = new System.Drawing.Point(319, 479);
+			this.lblCashVal.Name = "lblCashVal";
+			this.lblCashVal.Size = new System.Drawing.Size(88, 37);
+			this.lblCashVal.TabIndex = 1;
+			this.lblCashVal.Text = "$0.00";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+			this.label1.ForeColor = System.Drawing.Color.Gray;
+			this.label1.Location = new System.Drawing.Point(319, 449);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(53, 25);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Cash";
+			// 
 			// lblGrossSalesVal
 			// 
 			this.lblGrossSalesVal.AutoSize = true;
@@ -687,27 +714,37 @@
 			this.lblGrossSalesTitle.TabIndex = 0;
 			this.lblGrossSalesTitle.Text = "Gross Sales (Subtotal):";
 			// 
-			// label1
+			// panel1
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-			this.label1.ForeColor = System.Drawing.Color.Gray;
-			this.label1.Location = new System.Drawing.Point(319, 449);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(53, 25);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Cash";
+			this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
+			this.panel1.Controls.Add(this.label2);
+			this.panel1.Controls.Add(this.lbl);
+			this.panel1.Location = new System.Drawing.Point(999, 59);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(158, 90);
+			this.panel1.TabIndex = 12;
 			// 
-			// lblCashVal
+			// label2
 			// 
-			this.lblCashVal.AutoSize = true;
-			this.lblCashVal.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-			this.lblCashVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-			this.lblCashVal.Location = new System.Drawing.Point(319, 479);
-			this.lblCashVal.Name = "lblCashVal";
-			this.lblCashVal.Size = new System.Drawing.Size(88, 37);
-			this.lblCashVal.TabIndex = 1;
-			this.lblCashVal.Text = "$0.00";
+			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+			this.label2.ForeColor = System.Drawing.Color.White;
+			this.label2.Location = new System.Drawing.Point(10, 12);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(79, 20);
+			this.label2.TabIndex = 0;
+			this.label2.Text = "Low stock";
+			// 
+			// lbl
+			// 
+			this.lbl.AutoSize = true;
+			this.lbl.Font = new System.Drawing.Font("Segoe UI", 13.5F, System.Drawing.FontStyle.Bold);
+			this.lbl.ForeColor = System.Drawing.Color.White;
+			this.lbl.Location = new System.Drawing.Point(10, 42);
+			this.lbl.Name = "lbl";
+			this.lbl.Size = new System.Drawing.Size(53, 31);
+			this.lbl.TabIndex = 1;
+			this.lbl.Text = "000";
 			// 
 			// uHome
 			// 
@@ -717,7 +754,7 @@
 			this.Controls.Add(this.pnlMain);
 			this.Controls.Add(this.pnlTop);
 			this.Name = "uHome";
-			this.Size = new System.Drawing.Size(1134, 771);
+			this.Size = new System.Drawing.Size(1266, 835);
 			this.Load += new System.EventHandler(this.uHome_Load);
 			this.pnlTop.ResumeLayout(false);
 			this.pnlTop.PerformLayout();
@@ -747,6 +784,8 @@
 			this.tabFinancial.ResumeLayout(false);
 			this.pnlFinancialContainer.ResumeLayout(false);
 			this.pnlFinancialContainer.PerformLayout();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -804,5 +843,8 @@
 		private System.Windows.Forms.Button btnRefresh;
 		private System.Windows.Forms.Label lblCashVal;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label lbl;
 	}
 }

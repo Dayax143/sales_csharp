@@ -15,7 +15,30 @@ search by id the product
 
 - decorate dashboard with expenses
 
-enter to login
+
+- encrypt the user password
+
+the find button for customer searching and the search by phone textbox best performance
+
+press enter to login
+
+make it setup
+
+backup & restoration simplification
 
 customer history in reports and in sales window
+
+add payment reference number
+
+add invoice double click and 
+
+enter the invoice bill and reference number
+
+add none admin form access (make sale, invoice, print invoices
+
+add user logs which user have added, updated or deleted something
+
+which is the last_updated date of each action
+
+add supplier registration, payable & receivable management for both customers and suppliers
 
